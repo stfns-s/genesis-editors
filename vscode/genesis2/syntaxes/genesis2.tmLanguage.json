@@ -1,0 +1,59 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Genesis2",
+  "scopeName": "source.genesis2",
+  "_comment": "Mirrors genesispy.tmLanguage.json with Perl in place of Python; no j2 rules (genesis2 has no Jinja2 support).",
+  "patterns": [
+    { "include": "#genesis2-sentinel" },
+    { "include": "#genesis2-line" },
+    { "include": "#genesis2-inline" },
+    { "include": "#sv-templated-decls" },
+    { "include": "source.systemverilog" }
+  ],
+  "repository": {
+    "sv-templated-decls": {
+      "comment": "Keyword fallback for declarations whose name is backtick-templated (e.g. `module \\`mname\\``). The SystemVerilog grammar's region rules require literal identifiers and skip these lines; this rule restores keyword colour. Scope mirrors the Verilog grammar's `storage.type.module.verilog` so theming matches .v files.",
+      "patterns": [
+        {
+          "match": "\\b(macromodule|module|endmodule)\\b",
+          "name": "storage.type.module.verilog"
+        },
+        {
+          "match": "\\b(interface|endinterface|program|endprogram|package|endpackage|class|endclass|function|endfunction|task|endtask|modport|generate|endgenerate)\\b",
+          "name": "storage.type.systemverilog"
+        }
+      ]
+    },
+    "genesis2-sentinel": {
+      "match": "(^\\s*)(//;\\s*#.*)$",
+      "captures": {
+        "2": { "name": "comment.line.double-slash.sentinel.genesis2" }
+      }
+    },
+    "genesis2-line": {
+      "begin": "^(\\s*)(//;)(?!\\s*#)",
+      "beginCaptures": {
+        "2": { "name": "punctuation.section.embedded.begin.genesis2" }
+      },
+      "end": "$",
+      "contentName": "meta.embedded.line.perl",
+      "patterns": [
+        { "include": "source.perl" }
+      ]
+    },
+    "genesis2-inline": {
+      "begin": "(?<!\\\\)(`)(?!(timescale|default_nettype|include|ifdef|if|ifndef|else|endif)\\b)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.section.embedded.begin.genesis2" }
+      },
+      "end": "(?<!\\\\)(`)",
+      "endCaptures": {
+        "1": { "name": "punctuation.section.embedded.end.genesis2" }
+      },
+      "contentName": "meta.embedded.line.perl",
+      "patterns": [
+        { "include": "source.perl" }
+      ]
+    }
+  }
+}
