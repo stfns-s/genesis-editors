@@ -5,8 +5,8 @@ from the per-repo `extras/` directories.
 
 ## Layout
 
-- [`vim/`](vim/README.md)       -- Vim ftdetect + syntax for both tools.
-- [`emacs/`](emacs/README.md)   -- Emacs major modes (`genesispy-mode`, `genesis2-mode`).
+- [`vim/`](vim/README.md)       -- Vim ftdetect + syntax for both tools, plus liberty (`*.lib`) and libpy.
+- [`emacs/`](emacs/README.md)   -- Emacs major modes (`genesispy-mode`, `genesis2-mode`, `libpy-mode`).
 - [`vscode/`](vscode/README.md) -- VS Code extension sources (build with `vsce package`).
 
 See the linked per-subdirectory `README.md` for install instructions.
@@ -22,4 +22,7 @@ See the linked per-subdirectory `README.md` for install instructions.
 | `.vp`     | genesis2   | `genesis2`            |
 | `.svp`    | genesis2   | `genesis2`            |
 | `.vph`    | genesis2   | `genesis2`            |
+| `.lib`    | liberty    | `liberty` (Vim only)  |
+| `.lpy`    | libpy      | `libpy`               |
+| `.libpy`  | libpy      | `libpy`               |
 

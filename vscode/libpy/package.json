@@ -1,0 +1,40 @@
+{
+  "name": "libpy",
+  "displayName": "Libpy",
+  "description": "Syntax highlighting for libpy Python-templated Liberty (.lpy / .libpy).",
+  "version": "0.3.0",
+  "publisher": "libpy",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "libpy",
+        "aliases": [
+          "Libpy",
+          "libpy"
+        ],
+        "extensions": [
+          ".lpy",
+          ".libpy"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "libpy",
+        "scopeName": "source.libpy",
+        "path": "./syntaxes/libpy.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.embedded.line.python": "python",
+          "meta.embedded.block.python": "python"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Libpy",
+  "scopeName": "source.libpy",
+  "patterns": [
+    { "include": "#libpy-sentinel" },
+    { "include": "#libpy-line" },
+    { "include": "#libpy-inline" },
+    { "include": "#j2-sentinel" },
+    { "include": "#j2-stmt" },
+    { "include": "#j2-comment" }
+  ],
+  "repository": {
+    "libpy-sentinel": {
+      "match": "(^\\s*)(//;\\s*#.*)$",
+      "captures": {
+        "2": { "name": "comment.line.double-slash.sentinel.libpy" }
+      }
+    },
+    "libpy-line": {
+      "begin": "^(\\s*)(//;)(?!\\s*#)",
+      "beginCaptures": {
+        "2": { "name": "punctuation.section.embedded.begin.libpy" }
+      },
+      "end": "$",
+      "contentName": "meta.embedded.line.python",
+      "patterns": [
+        { "include": "source.python" }
+      ]
+    },
+    "libpy-inline": {
+      "begin": "(?<!\\\\)(`)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.section.embedded.begin.libpy" }
+      },
+      "end": "(?<!\\\\)(`)",
+      "endCaptures": {
+        "1": { "name": "punctuation.section.embedded.end.libpy" }
+      },
+      "contentName": "meta.embedded.line.python",
+      "patterns": [
+        { "include": "source.python" }
+      ]
+    },
+    "j2-sentinel": {
+      "match": "{%-?\\s*#[^%]*%}",
+      "name": "comment.block.sentinel.libpy"
+    },
+    "j2-stmt": {
+      "begin": "({%-?)(?!\\s*#)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.section.embedded.begin.libpy" }
+      },
+      "end": "(-?%})",
+      "endCaptures": {
+        "1": { "name": "punctuation.section.embedded.end.libpy" }
+      },
+      "contentName": "meta.embedded.block.python",
+      "patterns": [
+        { "include": "source.python" }
+      ]
+    },
+    "j2-comment": {
+      "begin": "{#",
+      "end": "#}",
+      "name": "comment.block.j2.libpy"
+    }
+  }
+}

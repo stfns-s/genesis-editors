@@ -1,16 +1,21 @@
 # Emacs support for Genesis2 / genesispy templates
 
-Two major modes:
+Three major modes:
 
 - **`genesis2-mode`** — Perl-templated Verilog/SystemVerilog (`.vp`, `.svp`, `.vph`).
 - **`genesispy-mode`** — Python-templated variant used by `gvpy.py` (`.vpy`, `.svpy`, `.gvpy`, `.vpyh`).
+- **`libpy-mode`** — Python-templated Liberty (`.lpy`, `.libpy`).
 
-Both derive from `verilog-mode` and use `mmm-mode` to layer the embedded
-language (`perl-mode` or `python-mode`) onto `//;` lines and backtick
-expressions. `genesispy-mode` additionally highlights the `--j2`
-delimiters `{% stmt %}`, `{% # ... %}` sentinel, and `{# ... #}` comment;
-`{{ expr }}` is left as plain Verilog to avoid clashes with brace-concat /
-replication patterns in non-j2 sources.
+`genesis2-mode` and `genesispy-mode` derive from `verilog-mode` and use
+`mmm-mode` to layer the embedded language (`perl-mode` or `python-mode`) onto
+`//;` lines and backtick expressions. `genesispy-mode` additionally highlights
+the `--j2` delimiters `{% stmt %}`, `{% # ... %}` sentinel, and `{# ... #}`
+comment; `{{ expr }}` is left as plain Verilog to avoid clashes with
+brace-concat / replication patterns in non-j2 sources.
+
+`libpy-mode` uses the same `mmm-mode` Python overlay and `--j2` highlighting,
+but derives from `prog-mode`: Emacs has no Liberty base mode, so the Liberty
+body is left unhighlighted (overlay only).
 
 ## Install
 
@@ -20,6 +25,7 @@ curl -sSL https://melpa.org/packages/mmm-mode-20240222.428.tar \
     | tar -x --strip-components=1 -C ~/.emacs.d/lisp/mmm
 cp genesis2-mode.el  ~/.emacs.d/
 cp genesispy-mode.el ~/.emacs.d/
+cp libpy-mode.el     ~/.emacs.d/
 ```
 
 Add to `~/.emacs.d/init.el`:
@@ -29,6 +35,7 @@ Add to `~/.emacs.d/init.el`:
 (require 'mmm-mode)
 (load "~/.emacs.d/genesis2-mode")
 (load "~/.emacs.d/genesispy-mode")
+(load "~/.emacs.d/libpy-mode")
 (setq mmm-submode-decoration-level 0)
 (setq mmm-global-mode 'maybe)
 ```
@@ -48,3 +55,5 @@ Add to `~/.emacs.d/init.el`:
 - `genesis2-mode.el` — Perl-embedded major mode derived from `verilog-mode`.
 - `genesispy-mode.el` — Python-embedded major mode (adds `--j2` delimiter
   highlighting on top of the genesis2 rules).
+- `libpy-mode.el` — Python-embedded major mode for Liberty templates, derived
+  from `prog-mode` (overlay only; no Liberty base highlighting).

@@ -4,6 +4,10 @@ Filetype detection and syntax highlighting for both template variants:
 
 - **`genesis2`** — Perl-templated Verilog/SystemVerilog (`.vp`, `.svp`, `.vph`).
 - **`genesispy`** — Python-templated variant used by `gvpy.py` (`.vpy`, `.svpy`, `.gvpy`, `.vpyh`).
+- **`liberty`** — Liberty timing library files (`.lib`). Standalone syntax, unrelated to the
+  genesis2/genesispy templates; bundled here for convenience. Upstream: Peter Debacker (imec).
+- **`libpy`** — Python-templated Liberty (`.lpy`, `.libpy`). The genesispy embedding schema
+  (`//;` lines, backtick expressions, `--j2` delimiters) layered on the `liberty` base.
 
 Highlights:
 - Verilog (or SystemVerilog if `syntax/verilog_systemverilog.vim` is on the
@@ -29,8 +33,12 @@ Copy (or symlink) all four files into your vim runtime:
 mkdir -p ~/.vim/after/ftdetect ~/.vim/ftdetect ~/.vim/syntax
 cp after/ftdetect/genesis2.vim  ~/.vim/after/ftdetect/genesis2.vim
 cp ftdetect/genesispy.vim       ~/.vim/ftdetect/genesispy.vim
+cp ftdetect/liberty.vim         ~/.vim/ftdetect/liberty.vim
+cp ftdetect/libpy.vim           ~/.vim/ftdetect/libpy.vim
 cp syntax/genesis2.vim          ~/.vim/syntax/genesis2.vim
 cp syntax/genesispy.vim         ~/.vim/syntax/genesispy.vim
+cp syntax/liberty.vim           ~/.vim/syntax/liberty.vim
+cp syntax/libpy.vim             ~/.vim/syntax/libpy.vim
 ```
 
 The `genesis2` ftdetect lives under `after/` and uses `set filetype=genesis2`
@@ -63,3 +71,10 @@ Plug 'youruser/genesis-editors', { 'rtp': 'vim' }
   Verilog/SystemVerilog.
 - `syntax/genesispy.vim` — Python-embedded syntax rules layered on top of
   Verilog/SystemVerilog.
+- `ftdetect/liberty.vim` — maps `*.lib` to filetype `liberty`. Plain `ftdetect/`
+  is sufficient — no other plugin claims `*.lib`.
+- `syntax/liberty.vim` — standalone Liberty syntax (groups, attributes, values,
+  engineering-suffix numbers). Independent of the genesis2/genesispy rules.
+- `ftdetect/libpy.vim` — maps `*.lpy` and `*.libpy` to filetype `libpy`.
+- `syntax/libpy.vim` — embedded-Python rules (mirrors `syntax/genesispy.vim`)
+  layered on the `liberty` base instead of Verilog.
