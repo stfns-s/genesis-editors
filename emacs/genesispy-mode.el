@@ -1,6 +1,6 @@
 ;;; genesispy-mode.el --- Major mode for genesispy .vpy/.svpy/.gvpy/.vpyh templates -*- lexical-binding: t; -*-
 
-;; Version: 0.3.0
+;; Version: 0.3.1
 ;; Keywords: languages, verilog, python
 ;; Package-Requires: ((emacs "26.1") (mmm-mode "0.5.9"))
 ;;

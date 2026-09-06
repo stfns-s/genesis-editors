@@ -1,7 +1,7 @@
 # VS Code support for Genesis2 templates
 
 TextMate grammar for Perl-templated Verilog/SystemVerilog files
-(`.vp` / `.svp` / `.vph`).
+(`.vp` / `.svp` / `.vph` / `.gvp` / `.vpi` / `.svph`).
 
 Composes the SystemVerilog grammar from
 [`mshr-h.veriloghdl`](https://marketplace.visualstudio.com/items?itemName=mshr-h.veriloghdl)
@@ -115,8 +115,8 @@ Reload the VS Code window after each grammar edit to pick up changes.
 
 ## Verify
 
-- Open a `.vp`, `.svp`, or `.vph` file. The status bar should read
-  **Genesis2**.
+- Open a `.vp`, `.svp`, `.vph`, `.gvp`, `.vpi`, or `.svph` file. The status bar
+  should read **Genesis2**.
 - On a `//;` line, run `Ctrl+Shift+P` -> `Developer: Inspect Editor
   Tokens and Scopes`. Expect `meta.embedded.line.perl` and
   `source.perl` scopes.

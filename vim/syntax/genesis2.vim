@@ -1,6 +1,6 @@
 " Vim syntax file
-" Language: Genesis2 Perl template (.vp / .svp / .vph)
-" Version: 0.3.0
+" Language: Genesis2 Perl template (.vp / .svp / .vph / .gvp / .vpi / .svph)
+" Version: 0.3.1
 " Verilog/SystemVerilog base with embedded Perl on `//;` lines and inside
 " backtick-delimited inline expressions.
 

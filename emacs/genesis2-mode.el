@@ -1,6 +1,6 @@
-;;; genesis2-mode.el --- Major mode for Genesis2 .vp/.svp/.vph templates -*- lexical-binding: t; -*-
+;;; genesis2-mode.el --- Major mode for Genesis2 .vp/.svp/.vph/.gvp/.vpi/.svph templates -*- lexical-binding: t; -*-
 
-;; Version: 0.3.0
+;; Version: 0.3.1
 ;; Keywords: languages, verilog, perl
 ;; Package-Requires: ((emacs "26.1") (mmm-mode "0.5.9"))
 ;;
@@ -44,9 +44,12 @@
 
 ;;;###autoload
 (progn
-  (add-to-list 'auto-mode-alist '("\\.vp\\'"  . genesis2-mode))
-  (add-to-list 'auto-mode-alist '("\\.svp\\'" . genesis2-mode))
-  (add-to-list 'auto-mode-alist '("\\.vph\\'" . genesis2-mode)))
+  (add-to-list 'auto-mode-alist '("\\.vp\\'"   . genesis2-mode))
+  (add-to-list 'auto-mode-alist '("\\.svp\\'"  . genesis2-mode))
+  (add-to-list 'auto-mode-alist '("\\.vph\\'"  . genesis2-mode))
+  (add-to-list 'auto-mode-alist '("\\.gvp\\'"  . genesis2-mode))
+  (add-to-list 'auto-mode-alist '("\\.vpi\\'"  . genesis2-mode))
+  (add-to-list 'auto-mode-alist '("\\.svph\\'" . genesis2-mode)))
 
 ;; Emacs regex has no lookahead; exclusions are done via :front-verify.
 

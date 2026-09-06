@@ -1,6 +1,6 @@
 " Vim syntax file
 " Language: genesispy Python template (.vpy / .svpy / .gvpy / .vpyh)
-" Version: 0.3.0
+" Version: 0.3.1
 " Mirrors syntax/genesis2.vim with @pythonTop in place of @perlTop,
 " plus two refinements: escape-aware backticks and Verilog-directive exclusion.
 " Also covers --j2 statement and comment delimiters ({% ... %}, {# ... #})

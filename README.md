@@ -22,4 +22,7 @@ See the linked per-subdirectory `README.md` for install instructions.
 | `.vp`     | genesis2   | `genesis2`            |
 | `.svp`    | genesis2   | `genesis2`            |
 | `.vph`    | genesis2   | `genesis2`            |
+| `.gvp`    | genesis2   | `genesis2`            |
+| `.vpi`    | genesis2   | `genesis2`            |
+| `.svph`   | genesis2   | `genesis2`            |
 

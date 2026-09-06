@@ -5,7 +5,7 @@ Two independent VS Code extensions, one per template variant:
 - [`genesispy/`](genesispy/README.md) -- Python-templated Verilog
   (`.vpy` / `.svpy` / `.gvpy` / `.vpyh`).
 - [`genesis2/`](genesis2/README.md) -- Perl-templated Verilog
-  (`.vp` / `.svp` / `.vph`).
+  (`.vp` / `.svp` / `.vph` / `.gvp` / `.vpi` / `.svph`).
 
 Each subdirectory is a self-contained extension with its own
 `package.json`, grammar, and build instructions. Install whichever

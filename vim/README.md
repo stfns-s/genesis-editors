@@ -2,7 +2,8 @@
 
 Filetype detection and syntax highlighting for both template variants:
 
-- **`genesis2`** — Perl-templated Verilog/SystemVerilog (`.vp`, `.svp`, `.vph`).
+- **`genesis2`** — Perl-templated Verilog/SystemVerilog (`.vp`, `.svp`, `.vph`,
+  `.gvp`, `.vpi`, `.svph`).
 - **`genesispy`** — Python-templated variant used by `gvpy.py` (`.vpy`, `.svpy`, `.gvpy`, `.vpyh`).
 
 Highlights:
@@ -26,18 +27,17 @@ Highlights:
 Copy (or symlink) all four files into your vim runtime:
 
 ```sh
-mkdir -p ~/.vim/after/ftdetect ~/.vim/ftdetect ~/.vim/syntax
+mkdir -p ~/.vim/after/ftdetect ~/.vim/syntax
 cp after/ftdetect/genesis2.vim  ~/.vim/after/ftdetect/genesis2.vim
-cp ftdetect/genesispy.vim       ~/.vim/ftdetect/genesispy.vim
+cp after/ftdetect/genesispy.vim ~/.vim/after/ftdetect/genesispy.vim
 cp syntax/genesis2.vim          ~/.vim/syntax/genesis2.vim
 cp syntax/genesispy.vim         ~/.vim/syntax/genesispy.vim
 ```
 
-The `genesis2` ftdetect lives under `after/` and uses `set filetype=genesis2`
-(force) so it wins against the `verilog_systemverilog` plugin (and any other
-plugin) whose ftdetect maps `*.vp` to a different filetype and uses `au!` to
-clear earlier autocmds. The `genesispy` ftdetect lives under plain `ftdetect/`
-because `*.vpy` / `*.svpy` / `*.gvpy` / `*.vpyh` are not claimed by other plugins.
+Both ftdetect files live under `after/` and use `set filetype=` (force) so they
+run last and win against any plugin whose ftdetect claims the same extensions
+and uses `au!` to clear earlier autocmds — for example `verilog_systemverilog`,
+which maps `*.vp` to a different filetype.
 
 For Neovim, swap `~/.vim` for `~/.config/nvim`.
 
@@ -53,12 +53,13 @@ Plug 'youruser/genesis-editors', { 'rtp': 'vim' }
 
 ## Files
 
-- `after/ftdetect/genesis2.vim` — maps `*.vp`, `*.svp`, `*.vph` to filetype
-  `genesis2`, forcing the filetype so it overrides plugins that also claim
-  `*.vp`. Lives under `after/` so it runs last (see install notes above).
-- `ftdetect/genesispy.vim` — maps `*.vpy`, `*.svpy`, `*.gvpy`, `*.vpyh` to
-  filetype `genesispy`. Plain `ftdetect/` is sufficient — no other plugin
-  claims these extensions.
+- `after/ftdetect/genesis2.vim` — maps `*.vp`, `*.svp`, `*.vph`, `*.gvp`,
+  `*.vpi`, `*.svph` to filetype `genesis2`, forcing the filetype so it overrides
+  plugins that also claim `*.vp`. Lives under `after/` so it runs last (see
+  install notes above).
+- `after/ftdetect/genesispy.vim` — maps `*.vpy`, `*.svpy`, `*.gvpy`, `*.vpyh`
+  to filetype `genesispy`, forcing the filetype. Lives under `after/` so it runs
+  last (see install notes above).
 - `syntax/genesis2.vim` — Perl-embedded syntax rules layered on top of
   Verilog/SystemVerilog.
 - `syntax/genesispy.vim` — Python-embedded syntax rules layered on top of

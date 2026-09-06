@@ -2,7 +2,7 @@
   "name": "genesispy",
   "displayName": "Genesispy",
   "description": "Syntax highlighting for genesispy Python-templated Verilog (.vpy / .svpy / .gvpy / .vpyh).",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "publisher": "genesispy",
   "engines": {
     "vscode": "^1.70.0"

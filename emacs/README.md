@@ -2,7 +2,8 @@
 
 Two major modes:
 
-- **`genesis2-mode`** — Perl-templated Verilog/SystemVerilog (`.vp`, `.svp`, `.vph`).
+- **`genesis2-mode`** — Perl-templated Verilog/SystemVerilog (`.vp`, `.svp`, `.vph`,
+  `.gvp`, `.vpi`, `.svph`).
 - **`genesispy-mode`** — Python-templated variant used by `gvpy.py` (`.vpy`, `.svpy`, `.gvpy`, `.vpyh`).
 
 Both derive from `verilog-mode` and use `mmm-mode` to layer the embedded
