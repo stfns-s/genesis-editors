@@ -1,13 +1,14 @@
-;;; genesispy-mode.el --- Major mode for genesispy .vpy/.svpy/.gvpy/.vpyh templates -*- lexical-binding: t; -*-
+;;; genesispy-mode.el --- Major modes for genesispy Verilog, C++ and C templates -*- lexical-binding: t; -*-
 
-;; Version: 0.3.1
-;; Keywords: languages, verilog, python
+;; Version: 0.4.0
+;; Keywords: languages, verilog, c, python
 ;; Package-Requires: ((emacs "26.1") (mmm-mode "0.5.9"))
 ;;
 ;; This file mirrors `../vim/syntax/genesispy.vim'.
 
 
 (require 'verilog-mode)
+(require 'cc-mode)
 (require 'mmm-mode)
 (require 'mmm-auto)
 
@@ -56,11 +57,25 @@
   (font-lock-add-keywords nil genesispy--font-lock-keywords))
 
 ;;;###autoload
+(define-derived-mode genesispy-cpp-mode c++-mode "Genesispy-C++"
+  "Major mode for genesispy Python-templated C++ files."
+  (font-lock-add-keywords nil genesispy--font-lock-keywords))
+
+;;;###autoload
+(define-derived-mode genesispy-c-mode c-mode "Genesispy-C"
+  "Major mode for genesispy Python-templated C files."
+  (font-lock-add-keywords nil genesispy--font-lock-keywords))
+
+;;;###autoload
 (progn
-  (add-to-list 'auto-mode-alist '("\\.vpy\\'"  . genesispy-mode))
-  (add-to-list 'auto-mode-alist '("\\.svpy\\'" . genesispy-mode))
-  (add-to-list 'auto-mode-alist '("\\.gvpy\\'" . genesispy-mode))
-  (add-to-list 'auto-mode-alist '("\\.vpyh\\'" . genesispy-mode)))
+  (add-to-list 'auto-mode-alist '("\\.vpy\\'"    . genesispy-mode))
+  (add-to-list 'auto-mode-alist '("\\.svpy\\'"   . genesispy-mode))
+  (add-to-list 'auto-mode-alist '("\\.gvpy\\'"   . genesispy-mode))
+  (add-to-list 'auto-mode-alist '("\\.vpyh\\'"   . genesispy-mode))
+  (add-to-list 'auto-mode-alist '("\\.cpppy\\'"  . genesispy-cpp-mode))
+  (add-to-list 'auto-mode-alist '("\\.cppgpy\\'" . genesispy-cpp-mode))
+  (add-to-list 'auto-mode-alist '("\\.cpy\\'"    . genesispy-c-mode))
+  (add-to-list 'auto-mode-alist '("\\.cgpy\\'"   . genesispy-c-mode)))
 
 ;; Emacs regex has no lookahead; exclusions are done via :front-verify.
 
@@ -77,14 +92,16 @@
     (not (looking-at-p "-?[ \t]*#"))))
 
 (defun genesispy--python-inline-verify ()
-  "Return non-nil unless the matched backtick opens a Verilog directive."
-  (save-excursion
-    (goto-char (match-end 0))
-    (not (looking-at-p
-          (concat "\\(?:"
-                  (mapconcat #'regexp-quote
-                             genesispy--verilog-backtick-directives "\\|")
-                  "\\)\\>")))))
+  "Return non-nil unless the matched backtick opens a Verilog directive.
+C and C++ have no backtick directives, so every backtick opens a region there."
+  (or (not (derived-mode-p 'verilog-mode))
+      (save-excursion
+        (goto-char (match-end 0))
+        (not (looking-at-p
+              (concat "\\(?:"
+                      (mapconcat #'regexp-quote
+                                 genesispy--verilog-backtick-directives "\\|")
+                      "\\)\\>"))))))
 
 (mmm-add-classes
  '((genesispy-python-line
@@ -117,6 +134,10 @@
 (mmm-add-mode-ext-class 'genesispy-mode nil 'genesispy-python-line)
 (mmm-add-mode-ext-class 'genesispy-mode nil 'genesispy-python-inline)
 (mmm-add-mode-ext-class 'genesispy-mode nil 'genesispy-j2-stmt)
+(dolist (mode '(genesispy-cpp-mode genesispy-c-mode))
+  (mmm-add-mode-ext-class mode nil 'genesispy-python-line)
+  (mmm-add-mode-ext-class mode nil 'genesispy-python-inline)
+  (mmm-add-mode-ext-class mode nil 'genesispy-j2-stmt))
 
 (provide 'genesispy-mode)
 

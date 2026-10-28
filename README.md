@@ -13,16 +13,23 @@ See the linked per-subdirectory `README.md` for install instructions.
 
 ## Supported file extensions
 
-| Extension | Tool       | Major mode / filetype |
-|-----------|------------|-----------------------|
-| `.vpy`    | genesispy  | `genesispy`           |
-| `.svpy`   | genesispy  | `genesispy`           |
-| `.gvpy`   | genesispy  | `genesispy`           |
-| `.vpyh`   | genesispy  | `genesispy`           |
-| `.vp`     | genesis2   | `genesis2`            |
-| `.svp`    | genesis2   | `genesis2`            |
-| `.vph`    | genesis2   | `genesis2`            |
-| `.gvp`    | genesis2   | `genesis2`            |
-| `.vpi`    | genesis2   | `genesis2`            |
-| `.svph`   | genesis2   | `genesis2`            |
+| Extension | Tool      | Base language | Emacs mode           | Vim filetype | VS Code language |
+|-----------|-----------|---------------|----------------------|--------------|------------------|
+| `.vpy`    | genesispy | Verilog       | `genesispy-mode`     | `genesispy`  | `genesispy`      |
+| `.svpy`   | genesispy | Verilog       | `genesispy-mode`     | `genesispy`  | `genesispy`      |
+| `.gvpy`   | genesispy | Verilog       | `genesispy-mode`     | `genesispy`  | `genesispy`      |
+| `.vpyh`   | genesispy | Verilog       | `genesispy-mode`     | `genesispy`  | `genesispy`      |
+| `.cpppy`  | genesispy | C++           | `genesispy-cpp-mode` | `genesispy`  | `genesispy-cpp`  |
+| `.cppgpy` | genesispy | C++           | `genesispy-cpp-mode` | `genesispy`  | `genesispy-cpp`  |
+| `.cpy`    | genesispy | C             | `genesispy-c-mode`   | `genesispy`  | `genesispy-c`    |
+| `.cgpy`   | genesispy | C             | `genesispy-c-mode`   | `genesispy`  | `genesispy-c`    |
+| `.vp`     | genesis2  | Verilog       | `genesis2-mode`      | `genesis2`   | `genesis2`       |
+| `.svp`    | genesis2  | Verilog       | `genesis2-mode`      | `genesis2`   | `genesis2`       |
+| `.vph`    | genesis2  | Verilog       | `genesis2-mode`      | `genesis2`   | `genesis2`       |
+| `.gvp`    | genesis2  | Verilog       | `genesis2-mode`      | `genesis2`   | `genesis2`       |
+| `.vpi`    | genesis2  | Verilog       | `genesis2-mode`      | `genesis2`   | `genesis2`       |
+| `.svph`   | genesis2  | Verilog       | `genesis2-mode`      | `genesis2`   | `genesis2`       |
+
+genesispy has no built-in C or C++ extension; a project registers one with
+`--extension .cpppy=.cpp` (or `.cpy=.c`).
 

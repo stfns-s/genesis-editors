@@ -1,0 +1,57 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Genesispy C++",
+  "scopeName": "source.genesispy.cpp",
+  "comment": "genesispy template rules over source.cpp, taken from source.genesispy except where this file defines them. The rules are injected so they also apply inside the base grammar's nested regions (function bodies, strings).",
+  "patterns": [
+    { "include": "source.cpp" }
+  ],
+  "injections": {
+    "L:source.genesispy.cpp -meta.embedded": {
+      "patterns": [
+        { "include": "source.genesispy#genesispy-sentinel" },
+        { "include": "source.genesispy#genesispy-line" },
+        { "include": "#templated-include" },
+        { "include": "#genesispy-inline" },
+        { "include": "source.genesispy#j2-sentinel" },
+        { "include": "source.genesispy#j2-stmt" },
+        { "include": "source.genesispy#j2-comment" }
+      ]
+    }
+  },
+  "repository": {
+    "templated-include": {
+      "comment": "source.cpp matches a whole #include line with one regex, which leaves no place for an inline expression in the file name (e.g. #include \"`VTOP`.h\"). This rule takes over such lines; scopes mirror source.cpp's.",
+      "begin": "^\\s*((#)\\s*(include|include_next))\\b\\s*(\")(?=[^\"]*`)",
+      "beginCaptures": {
+        "1": { "name": "keyword.control.directive.include.cpp" },
+        "2": { "name": "punctuation.definition.directive.cpp" },
+        "4": { "name": "string.quoted.double.include.cpp punctuation.definition.string.begin.cpp" }
+      },
+      "end": "(\")|$",
+      "endCaptures": {
+        "1": { "name": "string.quoted.double.include.cpp punctuation.definition.string.end.cpp" }
+      },
+      "name": "meta.preprocessor.include.cpp",
+      "contentName": "string.quoted.double.include.cpp",
+      "patterns": [
+        { "include": "#genesispy-inline" }
+      ]
+    },
+    "genesispy-inline": {
+      "comment": "As source.genesispy's rule, without the Verilog directive exclusion: C++ has no backtick directives.",
+      "begin": "(?<!\\\\)(`)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.section.embedded.begin.genesispy" }
+      },
+      "end": "(?<!\\\\)(`)",
+      "endCaptures": {
+        "1": { "name": "punctuation.section.embedded.end.genesispy" }
+      },
+      "contentName": "meta.embedded.line.python",
+      "patterns": [
+        { "include": "source.python" }
+      ]
+    }
+  }
+}

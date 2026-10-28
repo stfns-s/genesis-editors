@@ -1,0 +1,38 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Genesispy C",
+  "scopeName": "source.genesispy.c",
+  "comment": "genesispy template rules over source.c, taken from source.genesispy except where this file defines them. The rules are injected so they also apply inside the base grammar's nested regions (function bodies, strings).",
+  "patterns": [
+    { "include": "source.c" }
+  ],
+  "injections": {
+    "L:source.genesispy.c -meta.embedded": {
+      "patterns": [
+        { "include": "source.genesispy#genesispy-sentinel" },
+        { "include": "source.genesispy#genesispy-line" },
+        { "include": "#genesispy-inline" },
+        { "include": "source.genesispy#j2-sentinel" },
+        { "include": "source.genesispy#j2-stmt" },
+        { "include": "source.genesispy#j2-comment" }
+      ]
+    }
+  },
+  "repository": {
+    "genesispy-inline": {
+      "comment": "As source.genesispy's rule, without the Verilog directive exclusion: C has no backtick directives.",
+      "begin": "(?<!\\\\)(`)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.section.embedded.begin.genesispy" }
+      },
+      "end": "(?<!\\\\)(`)",
+      "endCaptures": {
+        "1": { "name": "punctuation.section.embedded.end.genesispy" }
+      },
+      "contentName": "meta.embedded.line.python",
+      "patterns": [
+        { "include": "source.python" }
+      ]
+    }
+  }
+}

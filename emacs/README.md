@@ -5,8 +5,11 @@ Two major modes:
 - **`genesis2-mode`** — Perl-templated Verilog/SystemVerilog (`.vp`, `.svp`, `.vph`,
   `.gvp`, `.vpi`, `.svph`).
 - **`genesispy-mode`** — Python-templated variant used by `gvpy.py` (`.vpy`, `.svpy`, `.gvpy`, `.vpyh`).
+- **`genesispy-cpp-mode`**, **`genesispy-c-mode`** — the same rules over C++ (`.cpppy`, `.cppgpy`)
+  and C (`.cpy`, `.cgpy`), derived from `c++-mode` and `c-mode`. Every backtick opens an inline
+  expression; C and C++ have no backtick directives to exclude.
 
-Both derive from `verilog-mode` and use `mmm-mode` to layer the embedded
+`genesis2-mode` and `genesispy-mode` derive from `verilog-mode`. All use `mmm-mode` to layer the embedded
 language (`perl-mode` or `python-mode`) onto `//;` lines and backtick
 expressions. `genesispy-mode` additionally highlights the `--j2`
 delimiters `{% stmt %}`, `{% # ... %}` sentinel, and `{# ... #}` comment;
@@ -36,8 +39,8 @@ Add to `~/.emacs.d/init.el`:
 
 ## Verify
 
-- Open a `.vpy` / `.svp` file. The mode line should read **Genesispy** /
-  **Genesis2**.
+- Open a `.vpy` / `.svp` / `.cpppy` / `.cpy` file. The mode line should read **Genesispy** /
+  **Genesis2** / **Genesispy-C++** / **Genesispy-C**.
 - On a `//;` line, `C-u C-x =` should report `python-mode` (or `perl-mode`
   for genesis2) as the major mode at point, confirming `mmm-mode` has
   applied the submode region.
@@ -47,5 +50,5 @@ Add to `~/.emacs.d/init.el`:
 ## Files
 
 - `genesis2-mode.el` — Perl-embedded major mode derived from `verilog-mode`.
-- `genesispy-mode.el` — Python-embedded major mode (adds `--j2` delimiter
-  highlighting on top of the genesis2 rules).
+- `genesispy-mode.el` — Python-embedded major modes over Verilog, C++ and C (adds `--j2`
+  delimiter highlighting on top of the genesis2 rules).

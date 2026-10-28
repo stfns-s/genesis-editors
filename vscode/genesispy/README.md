@@ -1,7 +1,17 @@
 # VS Code support for genesispy templates
 
-TextMate grammar for Python-templated Verilog/SystemVerilog files
-(`.vpy` / `.svpy` / `.gvpy` / `.vpyh`).
+TextMate grammars for Python-templated Verilog/SystemVerilog files
+(`.vpy` / `.svpy` / `.gvpy` / `.vpyh`), C++ files (`.cpppy` / `.cppgpy`,
+language `genesispy-cpp`) and C files (`.cpy` / `.cgpy`, language
+`genesispy-c`).
+
+The C++ and C grammars take VS Code's bundled `source.cpp` / `source.c`
+as the base and inject the `//;`, sentinel and `--j2` rules from
+`source.genesispy`, so the rules also apply inside function bodies and
+strings. Their inline rule has no directive exclusion: C and C++ have no
+backtick directives. The C++ grammar adds one rule for an `#include "..."`
+whose file name holds an inline expression, because `source.cpp` scopes a
+whole `#include` line with one regex.
 
 Composes the SystemVerilog grammar from
 [`mshr-h.veriloghdl`](https://marketplace.visualstudio.com/items?itemName=mshr-h.veriloghdl)
@@ -118,7 +128,8 @@ Reload the VS Code window after each grammar edit to pick up changes.
 ## Verify
 
 - Open a `.vpy`, `.svpy`, `.gvpy`, or `.vpyh` file. The status bar should read
-  **Genesispy**.
+  **Genesispy**; a `.cpppy` / `.cppgpy` file reads **Genesispy C++**, a
+  `.cpy` / `.cgpy` file **Genesispy C**.
 - On a `//;` line, run `Ctrl+Shift+P` -> `Developer: Inspect Editor
   Tokens and Scopes`. Expect `meta.embedded.line.python` and
   `source.python` scopes.
@@ -129,7 +140,9 @@ Reload the VS Code window after each grammar edit to pick up changes.
 
 - `package.json` -- manifest, language + grammar contributions.
 - `language-configuration.json` -- comments, brackets, auto-closing pairs.
-- `syntaxes/genesispy.tmLanguage.json` -- the TextMate grammar.
+- `syntaxes/genesispy.tmLanguage.json` -- the Verilog-based TextMate grammar.
+- `syntaxes/genesispy-cpp.tmLanguage.json` -- the C++-based grammar.
+- `syntaxes/genesispy-c.tmLanguage.json` -- the C-based grammar.
 
 ## Notes
 

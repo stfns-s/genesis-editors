@@ -4,15 +4,18 @@ Filetype detection and syntax highlighting for both template variants:
 
 - **`genesis2`** — Perl-templated Verilog/SystemVerilog (`.vp`, `.svp`, `.vph`,
   `.gvp`, `.vpi`, `.svph`).
-- **`genesispy`** — Python-templated variant used by `gvpy.py` (`.vpy`, `.svpy`, `.gvpy`, `.vpyh`).
+- **`genesispy`** — Python-templated variant used by `gvpy.py` (`.vpy`, `.svpy`, `.gvpy`, `.vpyh`),
+  plus C++ (`.cpppy`, `.cppgpy`) and C (`.cpy`, `.cgpy`) templates.
 
 Highlights:
 - Verilog (or SystemVerilog if `syntax/verilog_systemverilog.vim` is on the
-  runtime path) as the base.
+  runtime path) as the base. For the C++ and C extensions, `genesispy` takes
+  `cpp.vim` or `c.vim` as the base instead, and sets `filetype` to `cpp` or `c`.
 - `//;`-prefixed embedded-language lines highlighted via `@perlTop` (genesis2)
   or `@pythonTop` (genesispy).
-- Backtick-delimited inline expressions, escape-aware (`` \` ``) and
-  excluding Verilog backtick directives (`` `timescale ``, `` `ifdef ``, ...).
+- Backtick-delimited inline expressions, escape-aware (`` \` ``) and, over a
+  Verilog base, excluding Verilog backtick directives (`` `timescale ``,
+  `` `ifdef ``, ...).
 - Comment-only embedded lines (`//; # ...`) highlighted bold so they stand out
   from regular statements.
 - `--j2` delimiters in `genesispy` files: `{% stmt %}` (with `@pythonTop`),
@@ -57,10 +60,11 @@ Plug 'youruser/genesis-editors', { 'rtp': 'vim' }
   `*.vpi`, `*.svph` to filetype `genesis2`, forcing the filetype so it overrides
   plugins that also claim `*.vp`. Lives under `after/` so it runs last (see
   install notes above).
-- `after/ftdetect/genesispy.vim` — maps `*.vpy`, `*.svpy`, `*.gvpy`, `*.vpyh`
-  to filetype `genesispy`, forcing the filetype. Lives under `after/` so it runs
-  last (see install notes above).
+- `after/ftdetect/genesispy.vim` — maps `*.vpy`, `*.svpy`, `*.gvpy`, `*.vpyh`,
+  `*.cpppy`, `*.cppgpy`, `*.cpy`, `*.cgpy` to filetype `genesispy`, forcing the
+  filetype; this also overrides Vim's own `*.cpy` rule (COBOL or Python). Lives
+  under `after/` so it runs last (see install notes above).
 - `syntax/genesis2.vim` — Perl-embedded syntax rules layered on top of
   Verilog/SystemVerilog.
 - `syntax/genesispy.vim` — Python-embedded syntax rules layered on top of
-  Verilog/SystemVerilog.
+  Verilog/SystemVerilog, C++, or C, chosen by the file extension.

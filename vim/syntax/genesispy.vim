@@ -1,8 +1,10 @@
 " Vim syntax file
-" Language: genesispy Python template (.vpy / .svpy / .gvpy / .vpyh)
-" Version: 0.3.1
+" Language: genesispy Python template (.vpy / .svpy / .gvpy / .vpyh,
+"           C++: .cpppy / .cppgpy, C: .cpy / .cgpy)
+" Version: 0.4.0
 " Mirrors syntax/genesis2.vim with @pythonTop in place of @perlTop,
 " plus two refinements: escape-aware backticks and Verilog-directive exclusion.
+" The file extension picks the base syntax: C++, C, or Verilog.
 " Also covers --j2 statement and comment delimiters ({% ... %}, {# ... #})
 " since the engine is per-run and the same source file can be elaborated either
 " way. The `{{ ... }}` expression form is intentionally NOT highlighted -- it
@@ -16,11 +18,22 @@ elseif exists("b:current_syntax")
     finish
 endif
 
-" Base: SystemVerilog if available, else plain Verilog.
-if !empty(globpath(&runtimepath, 'syntax/verilog_systemverilog.vim'))
+" Base: C++ or C by extension; otherwise SystemVerilog if available, else
+" plain Verilog.
+let s:ext = expand('%:e')
+let s:verilog = 0
+if s:ext =~# '^\(cpppy\|cppgpy\)$'
+    ru! syntax/cpp.vim
+    set ft=cpp
+elseif s:ext =~# '^\(cpy\|cgpy\)$'
+    ru! syntax/c.vim
+    set ft=c
+elseif !empty(globpath(&runtimepath, 'syntax/verilog_systemverilog.vim'))
+    let s:verilog = 1
     ru! syntax/verilog_systemverilog.vim
     set ft=verilog_systemverilog
 else
+    let s:verilog = 1
     ru! syntax/verilog.vim
     set ft=verilog
 endif
@@ -51,12 +64,17 @@ syn region genesispyLine matchgroup=genesispyDelim
 " `expr` -- inline Python expression.
 "   * \\\@<! is "not preceded by a backslash" so the gvpy literal-backtick
 "     escape (\`) does not open or close the region.
-"   * \@! after the start backtick excludes the Verilog `directive keywords
-"     so they are not mis-parsed as opening a Python region.
-syn region genesispyInline matchgroup=genesispyDelim
-    \ start=#\\\@<!`\(timescale\|default_nettype\|include\|ifdef\|if\|ifndef\|else\|endif\)\@!#
-    \ end=#\\\@<!`#
-    \ keepend containedin=ALL contains=@pythonTop oneline
+"   * In Verilog, \@! after the start backtick excludes the `directive
+"     keywords so they are not mis-parsed as opening a Python region.
+"     C and C++ have no backtick directives.
+let s:inline_start = '\\\@<!`'
+if s:verilog
+    let s:inline_start .= '\(timescale\|default_nettype\|include\|ifdef\|if\|ifndef\|else\|endif\)\@!'
+endif
+exe 'syn region genesispyInline matchgroup=genesispyDelim'
+    \ 'start=#' . s:inline_start . '#'
+    \ 'end=#\\\@<!`#'
+    \ 'keepend containedin=ALL contains=@pythonTop oneline'
 
 " --j2 delimiters. Whitespace modifiers `{%-`, `-%}` are accepted
 " as a syntactic no-op. Either form may span multiple physical lines,

@@ -1,8 +1,8 @@
 {
   "name": "genesispy",
   "displayName": "Genesispy",
-  "description": "Syntax highlighting for genesispy Python-templated Verilog (.vpy / .svpy / .gvpy / .vpyh).",
-  "version": "0.3.1",
+  "description": "Syntax highlighting for genesispy Python-templated Verilog (.vpy / .svpy / .gvpy / .vpyh), C++ (.cpppy / .cppgpy) and C (.cpy / .cgpy).",
+  "version": "0.4.0",
   "publisher": "genesispy",
   "engines": {
     "vscode": "^1.70.0"
@@ -28,6 +28,30 @@
           ".vpyh"
         ],
         "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "genesispy-cpp",
+        "aliases": [
+          "Genesispy C++",
+          "genesispy-cpp"
+        ],
+        "extensions": [
+          ".cpppy",
+          ".cppgpy"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "genesispy-c",
+        "aliases": [
+          "Genesispy C",
+          "genesispy-c"
+        ],
+        "extensions": [
+          ".cpy",
+          ".cgpy"
+        ],
+        "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
@@ -39,6 +63,26 @@
           "meta.embedded.line.python": "python",
           "meta.embedded.block.python": "python",
           "source.systemverilog": "systemverilog"
+        }
+      },
+      {
+        "language": "genesispy-cpp",
+        "scopeName": "source.genesispy.cpp",
+        "path": "./syntaxes/genesispy-cpp.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.embedded.line.python": "python",
+          "meta.embedded.block.python": "python",
+          "source.cpp": "cpp"
+        }
+      },
+      {
+        "language": "genesispy-c",
+        "scopeName": "source.genesispy.c",
+        "path": "./syntaxes/genesispy-c.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.embedded.line.python": "python",
+          "meta.embedded.block.python": "python",
+          "source.c": "c"
         }
       }
     ]
